@@ -15,9 +15,14 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
+	private Handler handler;
+	
 	// opens window
 	public Game() {
 		new Window(WIDTH, HEIGHT, "Shadow of Stonas", this);
+		handler = new Handler();
+		
+		handler.addObject(new Player("Player", "black", 100, 100, ID.Player));
 	}
 	
 	public synchronized void start() {
@@ -66,7 +71,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
-		
+		handler.tick();
 	}
 	
 	private void render() {
@@ -81,6 +86,8 @@ public class Game extends Canvas implements Runnable {
 		
 		g.setColor(Color.black);
 		g.fillRect(0,  0,  WIDTH, HEIGHT);
+		
+		handler.render(g);
 		
 		g.dispose();
 		bs.show();

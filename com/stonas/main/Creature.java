@@ -1,3 +1,4 @@
+package com.stonas.main;
 
 public class Creature {
 

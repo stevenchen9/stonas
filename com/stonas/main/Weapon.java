@@ -1,3 +1,4 @@
+package com.stonas.main;
 public class Weapon {
 
 	private String name;
