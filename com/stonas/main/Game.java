@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	
 	private Handler handler;
-	
+	private HUD hud;
 	// opens window
 	public Game() {
 		handler = new Handler();
@@ -25,7 +25,9 @@ public class Game extends Canvas implements Runnable {
 		
 		new Window(WIDTH, HEIGHT, "Shadow of Stonas", this);
 		
+		hud = new HUD();
 		handler.addObject(new Player("Player", "black", 100, 100, ID.Player));
+		handler.addObject(new ShadowEnemyBasic(WIDTH / 2, HEIGHT / 2, ID.ShadowEnemyBasic));
 	}
 	
 	public synchronized void start() {
@@ -75,6 +77,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private void tick() {
 		handler.tick();
+		hud.tick();
 	}
 	
 	private void render() {
@@ -92,8 +95,16 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.render(g);
 		
+		hud.render(g);
+		
 		g.dispose();
 		bs.show();
+	}
+	
+	public static int clamp(int var, int min, int max) {
+		if(var >= max) return var = max;
+		else if(var <= min) return var = min;
+		else return var;
 	}
 	
 	public static void main(String[] args) {
