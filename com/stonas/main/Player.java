@@ -10,17 +10,12 @@ public class Player extends GameObject {
 	private int karma;
 	private String color;
 	
-	
-	
-	
 	public Player(String name, String color, int x, int y, ID id) {
 		super(x, y, id);
 		this.name = name;
 		this.color = color;
 		this.karma = 0;
 		
-		this.velX = 1;
-		this.velY = 1;
 	}
 	
 	// return the name of the player

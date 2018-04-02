@@ -1,6 +1,8 @@
 package com.stonas.main;
 
-public class Creature {
+import java.awt.Graphics;
+
+public class Creature extends GameObject {
 
 	private String name;
 	// Stats 
@@ -14,7 +16,8 @@ public class Creature {
 	private Type type;
 	
 	// Constructor
-	public Creature(String name, String color, int height, Type type) {
+	public Creature(String name, String color, int height, Type type, int x, int y, ID id) {
+		super(x, y, id);
 		this.name = name;
 		this.color = color;
 		this.attack = 0;
@@ -23,6 +26,14 @@ public class Creature {
 		this.level = 1;
 		this.height = height;
 		this.type = type;
+	}
+	
+	public void tick() {
+		
+	}
+	
+	public void render(Graphics g) {
+		
 	}
 	
 	// get level
