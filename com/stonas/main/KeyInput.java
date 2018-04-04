@@ -13,34 +13,41 @@ public class KeyInput extends KeyAdapter {
 	
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		  
 		for(int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
-			
+		   
 			if(tempObject.getId() == ID.Player) {
-				// Player Movement Go
-				if(key == KeyEvent.VK_W) tempObject.setVelY(-2);
-				if(key == KeyEvent.VK_S) tempObject.setVelY(2);
-				if(key == KeyEvent.VK_D) tempObject.setVelX(2);
-				if(key == KeyEvent.VK_A) tempObject.setVelX(-2);
+				//key events for player
+		    
+				if(key == KeyEvent.VK_W) tempObject.setVelY(tempObject.getVelY()-5);
+				if(key == KeyEvent.VK_A) tempObject.setVelX(tempObject.getVelX()-5);
+				if(key == KeyEvent.VK_S) tempObject.setVelY(tempObject.getVelY()+5);
+				if(key == KeyEvent.VK_D) tempObject.setVelX(tempObject.getVelX()+5);
+				tempObject.setVelY(Game.clamp(tempObject.getVelY(),-5,5));
+		    	tempObject.setVelX(Game.clamp(tempObject.getVelX(),-5,5));
 			}
-			
 		}
-		System.out.println(key);
+		  
+		if(key == KeyEvent.VK_ESCAPE) System.exit(1);
 	}
-	
-	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		for(int i = 0; i < handler.object.size(); i++) {
-			GameObject tempObject = handler.object.get(i);
-			
-			if(tempObject.getId() == ID.Player) {
-				// Player Movement Stop
-				if(key == KeyEvent.VK_W) tempObject.setVelY(0);
-				if(key == KeyEvent.VK_S) tempObject.setVelY(0);
-				if(key == KeyEvent.VK_D) tempObject.setVelX(0);
-				if(key == KeyEvent.VK_A) tempObject.setVelX(0);
-			}
-			
-		}
-	}
+		 
+		 public void keyReleased(KeyEvent e){
+			 int key = e.getKeyCode();
+		  
+			 for(int i = 0; i < handler.object.size(); i++) {
+				 GameObject tempObject = handler.object.get(i);
+		   
+				 if(tempObject.getId() == ID.Player) {
+					 //key events for player
+		    
+					 if(key == KeyEvent.VK_W) tempObject.setVelY(tempObject.getVelY()+5);
+					 if(key == KeyEvent.VK_A) tempObject.setVelX(tempObject.getVelX()+5);
+					 if(key == KeyEvent.VK_S) tempObject.setVelY(tempObject.getVelY()-5);
+					 if(key == KeyEvent.VK_D) tempObject.setVelX(tempObject.getVelX()-5);
+					 tempObject.setVelY(Game.clamp(tempObject.getVelY(),-5,5));
+					 tempObject.setVelX(Game.clamp(tempObject.getVelX(),-5,5));
+				 }
+			 }
+		 }
 }

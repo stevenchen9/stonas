@@ -17,6 +17,8 @@ public class Game extends Canvas implements Runnable {
 	
 	private Handler handler;
 	private HUD hud;
+	
+	private Player user;
 	// opens window
 	public Game() {
 		handler = new Handler();
@@ -25,8 +27,10 @@ public class Game extends Canvas implements Runnable {
 		
 		new Window(WIDTH, HEIGHT, "Shadow of Stonas", this);
 		
+		user = new Player("Player", "black", 100, 100, ID.Player, handler);
 		hud = new HUD();
-		handler.addObject(new Player("Player", "black", 100, 100, ID.Player));
+		handler.addObject(user);
+		handler.addObject(new Creature(user, "Shadow", "blue", 20, Type.Defensive, 100, 100, ID.AllyCreature, handler));
 		handler.addObject(new ShadowEnemyBasic(WIDTH / 2, HEIGHT / 2, ID.ShadowEnemyBasic));
 	}
 	

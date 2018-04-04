@@ -1,6 +1,7 @@
 package com.stonas.main;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 // Refers to all "game objects" (player, weapon, enemies
 // coins, etc.)
@@ -18,7 +19,10 @@ public abstract class GameObject {
 	
 	public abstract void tick();
 	public abstract void render(Graphics g);
-
+	public abstract Rectangle getBounds();
+	// each game object should probably have collision, uncomment later.
+	// protected abstract void collision();
+	
 	// Getter-Setters
 	public int getX() {
 		return x;

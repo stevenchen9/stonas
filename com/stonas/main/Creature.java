@@ -1,6 +1,8 @@
 package com.stonas.main;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Creature extends GameObject {
 
@@ -14,10 +16,15 @@ public class Creature extends GameObject {
 	private int level;
 	private String color;
 	private Type type;
+	private Player master;
+	private Handler handler;
 	
 	// Constructor
-	public Creature(String name, String color, int height, Type type, int x, int y, ID id) {
+	public Creature(Player master, String name, String color, 
+			int height, Type type, int x, int y, ID id, Handler handler) {
 		super(x, y, id);
+		this.handler = handler;
+		this.master = master;
 		this.name = name;
 		this.color = color;
 		this.attack = 0;
@@ -28,12 +35,36 @@ public class Creature extends GameObject {
 		this.type = type;
 	}
 	
+	// TODO: need to figure the logic of the movement out
 	public void tick() {
+		x += (0.5 * master.velX);
+		y += (0.5 * master.velY);
 		
+		x = Game.clamp(x, master.x, Game.WIDTH - 64);
+		y = Game.clamp(y, master.y, Game.HEIGHT - 64);
+		
+		collision();
+	}
+	
+	protected void collision() {
+		for(GameObject tempObject : handler.object) {
+			if(tempObject.getId() == ID.ShadowEnemyBasic) {
+				//collision code
+				if(getBounds().intersects(tempObject.getBounds())) {
+					HUD.HEALTH_CREATURE_ALLY -= 5;
+				}
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
-		
+		g.setColor(Color.blue);
+		g.fillRect(x, y, 24, 24);
+	}
+	
+	public Rectangle getBounds() {
+		// should be able to scale with power ups
+		return new Rectangle(x, y, 24, 24);
 	}
 	
 	// get level

@@ -2,6 +2,7 @@ package com.stonas.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Player extends GameObject {
 	
@@ -9,13 +10,14 @@ public class Player extends GameObject {
 	private String name;
 	private int karma;
 	private String color;
+	private Handler handler;
 	
-	public Player(String name, String color, int x, int y, ID id) {
+	public Player(String name, String color, int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.name = name;
 		this.color = color;
 		this.karma = 0;
-		
+		this.handler = handler;
 	}
 	
 	// return the name of the player
@@ -37,18 +39,33 @@ public class Player extends GameObject {
 		this.karma = karma - value;
 	}
 	
-	@Override
 	public void tick() {
 		x += velX;
 		y += velY;
 		
 		x = Game.clamp(x, 0, Game.WIDTH - 64);
 		y = Game.clamp(y, 0, Game.HEIGHT - 64);
+		
+		collision();
 	}
 	
-	@Override
+	protected void collision() {
+		for(GameObject tempObject : handler.object) {
+			if(tempObject.getId() == ID.ShadowEnemyBasic) {
+				//collision code
+				if(getBounds().intersects(tempObject.getBounds())) {
+					HUD.HEALTH_USER -= 2;
+				}
+			}
+		}
+	}
+	
 	public void render(Graphics g) {
 		g.setColor(Color.green);
 		g.fillRect(x,  y, 32, 32);
+	}
+		
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 32, 32);
 	}
 }
